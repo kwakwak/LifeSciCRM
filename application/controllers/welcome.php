@@ -36,9 +36,11 @@ class Welcome extends CI_Controller {
 		$this->load->view('footer');
 	}
 
-	public function test()
+	public function user($id)
 	{
-		echo $this->session->userdata('name');
+		$this->load->database();
+		$this->load->model('user');
+		$this->user->info($id);
 	}
 }
 
