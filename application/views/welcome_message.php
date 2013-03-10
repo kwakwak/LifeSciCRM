@@ -69,23 +69,15 @@
 
 <div id="container">
 	<h1>Welcome to CodeIgniter!</h1>
-
 	<?php
+		if ($this->session->userdata('logged')==1)
+		{
+			echo $this->session->userdata('name');
 
-	if ($logged == 0){
-		echo form_open();
-		echo form_input('name');
-		echo form_password('password');
-		echo form_submit('mysubmit', 'Submit Post!');
-		echo form_close();
-	}
-
-
-		var_dump ($this->session->all_userdata());
+			$hidden = array('action' => 'logout');
+			echo form_open('', '', $hidden);
+			echo form_submit('mysubmit', 'Logout!');
+			echo form_close();
+		}
 	?>
 
-	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
-</div>
-
-</body>
-</html>
