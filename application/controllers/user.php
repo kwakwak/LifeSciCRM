@@ -26,10 +26,13 @@ class User extends CI_Controller {
 
 
 		$this->load->helper('form');
-		$this->load->view('welcome_message');
+		$this->load->view('header');
 
-		if ($this->user_model->isLogged())
+		if ($this->logged_in())
+		{
+			$this->load->helper('url');
 			$this->load->view('logged');
+		}
 		else
 			$this->load->view('login_form');
 		
@@ -39,10 +42,32 @@ class User extends CI_Controller {
 
 	public function profile($id)
 	{
+		$this->load->helper('url');
+
+		if (!$this->logged_in())
+		{
+   			redirect('/', 'refresh');
+		}
+
+		$this->load->helper('form');
+		$this->load->view('header');
+		$this->load->view('logged');
+
 		$this->load->database();
 		$this->load->model('user_model');
-		$this->user_model->profile($id);
+		$profile_arr=$this->user_model->profile($id);
+
+		$this->load->view('profile',$profile_arr);
+		$this->load->view('footer');
 	}
+
+	 private function logged_in()
+    {
+        if ($this->session->userdata('id'))
+            return true;
+        else
+            return false;
+    }
 }
 
 /* End of file welcome.php */

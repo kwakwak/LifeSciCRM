@@ -33,18 +33,20 @@ class User_model extends CI_Model {
 
     function profile($id)
     {
-        $this->db->select('name,password');
+        
+        $profile_arr = array();
+
+        $this->db->select('name');
         $this->db->where('id', $id); 
         $query = $this->db->get('users');
-        var_dump($query->result());
-    }
+        $row = $query->row();
 
-    function isLogged()
-    {
-        if ($this->session->userdata('id'))
-            return true;
-        else
-            return false;
+        if ($query->num_rows() > 0) 
+        {
+           $profile_arr['name'] = $row->name;
+        }
+
+        return $profile_arr;
     }
 
 }
