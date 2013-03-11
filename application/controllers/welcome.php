@@ -2,47 +2,87 @@
 
 class Welcome extends CI_Controller {
 
-	 public function __construct()
+	public function __construct()
     {
     	parent::__construct();
-    	
+
     	$this->load->library('session');
-    	
+    	$this->load->helper('url');
+
+   		if ($this->session->userdata('id'))
+      	{
+           	redirect('user/index/'.$this->session->userdata('id'));
+      	}
+
     }
 
 	public function index()
 	{
-		
-		if (isset($_POST['action']) and $_POST['action']=="logout")
-			$this->session->sess_destroy();
-
-		if (isset($_POST['name']) and isset($_POST['password']))
-		{
-			$this->load->database();
-			$this->load->model('user');
-			$this->user->login();
-		}
-
-		$logged= $this->session->userdata('logged');
+		$this->load->view('header');
 
 		$this->load->helper('form');
-		$this->load->view('welcome_message');
+		$this->load->library('form_validation');
 
-		if ($logged==0)
+		$this->form_validation->set_rules('name', 'Full Name', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required|callback_db_check');
+
+		if ($this->form_validation->run() == FALSE)
 		{
-			$this->load->view('login_form');
+			$this->load->view('welcome/login_form');
 		}
-			
-		$this->load->view('footer');
+		else
+		{
+			redirect('user/index/'.$this->session->userdata('id'));
+		}
 	}
 
-	public function user($id)
+
+	public function db_check()
 	{
+		$this->load->helper('security');
+		$this->load->model('welcome_model');
 		$this->load->database();
-		$this->load->model('user');
-		$this->user->info($id);
-	}
-}
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
+		 if ($this->welcome_model->login()){
+		 	return TRUE;
+		 }
+			else
+		 {
+			$this->form_validation->set_message('db_check', 'Name or Password incorrect.');
+			return FALSE;
+		 }
+	}
+
+	
+    public function new_user()
+    {
+		$this->load->database();
+
+  		$this->load->helper('form');
+		$this->load->view('header');
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('name', 'Full Name', 'trim|required|xss_clean|is_unique[users.name]');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required|matches[passconf]|md5');
+		$this->form_validation->set_rules('passconf', 'Password Confirmation', 'trim|required');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+		$this->form_validation->set_rules('phone', 'Phone Number', 'trim|required|integer');
+		$this->form_validation->set_rules('building', 'Building Name', 'trim|required');
+		$this->form_validation->set_rules('room_num', 'Room Number', 'trim|required|integer');
+
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->load->view('welcome/sign_form');
+		}
+		else
+		{
+			$this->load->model('welcome_model');
+			$this->welcome_model->new_user();
+			redirect('/', 'refresh');
+		}
+		
+
+		$this->load->view('footer');
+    }
+}
