@@ -68,7 +68,7 @@ class Welcome extends CI_Controller {
 		$this->form_validation->set_rules('passconf', 'Password Confirmation', 'trim|required');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 		$this->form_validation->set_rules('phone', 'Phone Number', 'trim|required|integer');
-		$this->form_validation->set_rules('building', 'Building Name', 'trim|required');
+		$this->form_validation->set_rules('building', 'Building Name', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('room_num', 'Room Number', 'trim|required|integer');
 
 		if ($this->form_validation->run() == FALSE)
