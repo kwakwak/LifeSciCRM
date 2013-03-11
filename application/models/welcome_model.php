@@ -39,6 +39,9 @@ class Welcome_model extends CI_Model {
                    'building' => $_POST['building'] ,
                 );
         $this->db->insert('users', $data); 
+        $sessionData['id'] = $this->db->insert_id();
+        $sessionData['name'] = $_POST['name'];
+        $this->session->set_userdata($sessionData);
     
     }
 
