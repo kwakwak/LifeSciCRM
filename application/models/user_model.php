@@ -16,7 +16,7 @@ class User_model extends CI_Model {
         $this->name   = $_POST['name']; 
         $this->password = $_POST['password'];
 
-        $this->db->select('id');
+        $this->db->select('id,name');
         $this->db->where('name', $this->name); 
         $this->db->where('password', $this->password);
         $query = $this->db->get('users');
@@ -24,7 +24,7 @@ class User_model extends CI_Model {
                 
         if ($query->num_rows() > 0) 
         {
-            $sessionData['name'] =  $this->name ;
+            $sessionData['name'] =  $row->name ;
             $sessionData['id'] = $row->id ;
             $this->session->set_userdata($sessionData);
         }
@@ -36,14 +36,17 @@ class User_model extends CI_Model {
         
         $profile_arr = array();
 
-        $this->db->select('name');
+        $this->db->select('phone,building,room_num,email');
         $this->db->where('id', $id); 
         $query = $this->db->get('users');
         $row = $query->row();
 
         if ($query->num_rows() > 0) 
         {
-           $profile_arr['name'] = $row->name;
+           $profile_arr['phone'] = $row->phone;
+           $profile_arr['building'] = $row->building;
+           $profile_arr['room_num'] = $row->room_num;
+           $profile_arr['email'] = $row->email;
         }
 
         return $profile_arr;

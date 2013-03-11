@@ -7,6 +7,7 @@ class User extends CI_Controller {
     	parent::__construct();
     	
     	$this->load->library('session');
+    	$this->load->helper('url');
     	
     }
 
@@ -30,7 +31,7 @@ class User extends CI_Controller {
 
 		if ($this->logged_in())
 		{
-			$this->load->helper('url');
+			
 			$this->load->view('logged');
 		}
 		else
@@ -42,7 +43,6 @@ class User extends CI_Controller {
 
 	public function profile($id)
 	{
-		$this->load->helper('url');
 
 		if (!$this->logged_in())
 		{

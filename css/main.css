@@ -1,0 +1,79 @@
+
+	::selection{ background-color: #E13300; color: white; }
+	::moz-selection{ background-color: #E13300; color: white; }
+	::webkit-selection{ background-color: #E13300; color: white; }
+
+	body {
+		background-color: #fff;
+		margin: 40px;
+		font: 13px/20px normal Helvetica, Arial, sans-serif;
+		color: #4F5155;
+	}
+
+	a {
+		color: #003399;
+		background-color: transparent;
+		font-weight: normal;
+	}
+
+	h1 {
+		color: #444;
+		background-color: transparent;
+		font-size: 19px;
+		font-weight: normal;
+		
+		padding-left: 15px;
+	}
+
+	code {
+		font-family: Consolas, Monaco, Courier New, Courier, monospace;
+		font-size: 12px;
+		background-color: #f9f9f9;
+		border: 1px solid #D0D0D0;
+		color: #002166;
+		display: block;
+		margin: 14px 0 14px 0;
+		padding: 12px 10px 12px 10px;
+	}
+
+
+	
+	p.footer{
+		text-align: right;
+		font-size: 11px;
+		border-top: 1px solid #D0D0D0;
+		line-height: 32px;
+		padding: 0 10px 0 10px;
+		margin: 20px 0 0 0;
+	}
+	
+	#container{
+		margin: 10px;
+		padding: 10px;
+		border: 1px solid #D0D0D0;
+		-webkit-box-shadow: 0 0 8px #D0D0D0;
+	}
+	input.link {
+		background-color: transparent;
+		text-decoration: underline;
+		border: none;
+		color: black;
+		cursor: pointer;
+		margin: 0;
+		padding: 0;
+	}
+	a.link {
+		color: black;
+		font-size: large;
+		text-decoration: none;
+	}
+	#logged {
+		
+		padding-left: 15px;
+
+	}
+	#body {
+		margin-top: 15px;
+		padding-top: 15px;
+		border-top: 1px solid #D0D0D0;
+	}
