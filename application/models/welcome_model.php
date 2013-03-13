@@ -7,12 +7,16 @@ class Welcome_model extends CI_Model {
         parent::__construct();
     }
 
-    function login()
+    function login($level)
     {
         $hashPass = do_hash($_POST['password'], 'md5');
         $this->db->select('id,name');
         $this->db->where('name', $_POST['name']); 
         $this->db->where('password', $hashPass);
+        if ($level=='team')
+            $this->db->where('level', 1);
+        if ($level=='user')
+            $this->db->where('level', 0);
         $query = $this->db->get('users');
         $row = $query->row();
                 
@@ -20,6 +24,7 @@ class Welcome_model extends CI_Model {
         {
             $sessionData['id'] = $row->id ;
             $sessionData['name'] = $row->name ;
+            $sessionData['level'] = $level ;
             $this->session->set_userdata($sessionData);
             return TRUE;
         }

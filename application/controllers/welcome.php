@@ -16,19 +16,21 @@ class Welcome extends CI_Controller {
 
     }
 
-	public function index()
+	public function index($level='user')
 	{
+
 		$this->load->view('header');
 
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('name', 'Full Name', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required|callback_db_check');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required|callback_db_check['. $level .']');
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->load->view('welcome/login_form');
+			$data['level'] = $level;
+			$this->load->view('welcome/login_form',$data);
 		}
 		else
 		{
@@ -36,14 +38,19 @@ class Welcome extends CI_Controller {
 		}
 	}
 
+	public function team()
+	{
+		$this->index('team');
+	}
 
-	public function db_check()
+
+	public function db_check($str,$level)
 	{
 		$this->load->helper('security');
 		$this->load->model('welcome_model');
 		$this->load->database();
 
-		 if ($this->welcome_model->login()){
+		 if ($this->welcome_model->login($level)){
 		 	return TRUE;
 		 }
 			else
