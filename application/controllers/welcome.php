@@ -9,14 +9,17 @@ class Welcome extends CI_Controller {
     	$this->load->library('session');
     	$this->load->helper('url');
 
-   		if ($this->session->userdata('id'))
-      	{
-           	redirect('user/index/'.$this->session->userdata('id'));
-      	}
+   		if ($this->session->userdata('level')=='User')
+        	redirect('user/index/'.$this->session->userdata('id'));
+        elseif ($this->session->userdata('level')=='Team')
+        	redirect('team');
+
+
+    
 
     }
 
-	public function index($level='user')
+	public function index($level='User')
 	{
 
 		$this->load->view('header');
@@ -34,13 +37,18 @@ class Welcome extends CI_Controller {
 		}
 		else
 		{
-			redirect('user/index/'.$this->session->userdata('id'));
+			if ($level=='User')
+				redirect('user/index/'.$this->session->userdata('id'));
+			else
+				redirect('team');
 		}
+
+		$this->load->view('footer');
 	}
 
 	public function team()
 	{
-		$this->index('team');
+		$this->index('Team');
 	}
 
 

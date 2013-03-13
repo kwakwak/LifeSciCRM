@@ -13,9 +13,9 @@ class Welcome_model extends CI_Model {
         $this->db->select('id,name');
         $this->db->where('name', $_POST['name']); 
         $this->db->where('password', $hashPass);
-        if ($level=='team')
+        if ($level=='Team')
             $this->db->where('level', 1);
-        if ($level=='user')
+        if ($level=='User')
             $this->db->where('level', 0);
         $query = $this->db->get('users');
         $row = $query->row();

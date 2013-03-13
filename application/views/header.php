@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
+	<title>Tel Aviv University >> Life Sciences >> CRM</title>
 	<link rel="stylesheet" type="text/css" 
 	href="<?php echo base_url('css/main.css');?>">
 
