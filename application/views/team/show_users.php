@@ -2,7 +2,17 @@
 <?php
 foreach ($usersArray as $row)
 {
-    echo $row->name.'<br/>';
+	if ($row->level==1) 
+		echo '<b>Team</b> | ';
+
+	echo mailto($row->email,$row->name) .
+		 ' | '.
+		 $row->phone .
+		 ' | '.
+		 $row->building .
+		 ' ' .
+		 $row->room_num .
+		 '<br>' ;
 }
 ?>
 </div>

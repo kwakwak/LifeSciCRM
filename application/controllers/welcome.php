@@ -13,10 +13,6 @@ class Welcome extends CI_Controller {
         	redirect('user/index/'.$this->session->userdata('id'));
         elseif ($this->session->userdata('level')=='Team')
         	redirect('team');
-
-
-    
-
     }
 
 	public function index($level='User')

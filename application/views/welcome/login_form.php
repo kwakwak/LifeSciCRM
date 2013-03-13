@@ -1,7 +1,7 @@
 <div id="body">
-<h3>LogIn </h2>
+
 <?php
-		echo 'Welcome '.$level.'!';
+		echo '<h3>'.$level.' Login</h3>';
 		echo validation_errors();
 		echo form_open();
 		echo form_label('Full Name ', 'name');
