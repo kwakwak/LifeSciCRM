@@ -10,7 +10,7 @@ class Welcome extends CI_Controller {
     	$this->load->helper('url');
 
    		if ($this->session->userdata('level')=='User')
-        	redirect('user/index/'.$this->session->userdata('id'));
+        	redirect('user');
         elseif ($this->session->userdata('level')=='Team')
         	redirect('team');
     }
@@ -34,7 +34,7 @@ class Welcome extends CI_Controller {
 		else
 		{
 			if ($level=='User')
-				redirect('user/index/'.$this->session->userdata('id'));
+				redirect('user');
 			else
 				redirect('team');
 		}
@@ -90,7 +90,7 @@ class Welcome extends CI_Controller {
 		{
 			$this->load->model('welcome_model');
 			$this->welcome_model->new_user();
-			redirect('/', 'refresh');
+			redirect('user', 'refresh');
 		}
 		
 

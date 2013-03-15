@@ -13,10 +13,12 @@ class User extends CI_Controller {
       	{
            	redirect('/');
       	}
+      
     }
 
-	public function index($id)
+	public function index()
 	{
+    $id=$this->session->userdata('id');
 		$this->load->helper('form');
 		$this->load->view('header');
 		$this->load->view('logged');
