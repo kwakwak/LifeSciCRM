@@ -1,9 +1,10 @@
 
 
-	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds |  
-	<?php if empty(this->session->userdata('level')) {?>
-		<a href="<?php echo site_url('welcome/team');?>">Team Login</a></p>
-	<?php } ?>
+	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds   
+	<?php 
+		if ($this->session->userdata('level')=="")
+			echo "| <a href='" . site_url('welcome/team') ."''>Team Login</a></p>";
+	?>
 </div>
 
 </body>

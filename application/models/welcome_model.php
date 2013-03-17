@@ -46,6 +46,7 @@ class Welcome_model extends CI_Model {
         $this->db->insert('users', $data); 
         $sessionData['id'] = $this->db->insert_id();
         $sessionData['name'] = $_POST['name'];
+        $sessionData['level'] = "User";
         $this->session->set_userdata($sessionData);
     
     }
