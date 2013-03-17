@@ -26,9 +26,12 @@ class Calls extends CI_Controller {
 
       $this->load->database();
       $this->load->model('calls_model');
-      $data['openArray']=$this->calls_model->open();
-    
+      if ($this->session->userdata('level')=="User") 
+        $data['openArray']=$this->calls_model->open("user");
+      elseif ($this->session->userdata('level')=="Team") 
+        $data['openArray']=$this->calls_model->open("team");
       $this->load->view('calls/open',$data);
+
       $this->load->view('footer');
     }
 }
