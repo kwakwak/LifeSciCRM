@@ -26,8 +26,21 @@ class Welcome extends CI_Controller {
 			
 			$this->load->view('welcome/login_form');
 		}
-		else
-			$this->user_level_check();
+		else 
+		{
+            switch ($this->session->userdata('level')) {
+                case 'user':
+                    redirect('user');
+                    break;
+                case 'team':
+                    redirect('team');
+                    break;
+                case 'root':
+                    redirect('root');
+                    break;
+            }
+		}
+			
 	
 
 		$this->load->view('footer');
@@ -77,14 +90,11 @@ class Welcome extends CI_Controller {
 		{
 			$this->load->model('welcome_model');
 			$this->welcome_model->new_user();
+			redirect('user');
 		}
 		
 
 		$this->load->view('footer');
     }
-    private function user_level_check()
-    {
-    //	$this->load->model('welcome_model');
-		$this->welcome_model->user_level_check();
-    }
+
 }

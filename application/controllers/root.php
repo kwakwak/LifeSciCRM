@@ -15,20 +15,17 @@ class Root extends CI_Controller {
         }
 
     }
+
     public function index()
-    {
-     echo "hey root";
-    }
-    public function showUsers()
     {
       $this->load->view('header');
       $this->load->view('logged');
 
       $this->load->database();
-      $this->load->model('team_model');
-      $data['usersArray']=$this->team_model->getUsers();
+      $this->load->model('root_model');
+      $data['usersArray']=$this->root_model->getUsers();
     
-      $this->load->view('team/show_users',$data);
+      $this->load->view('root/show_users',$data);
       $this->load->view('footer');
     }
 }

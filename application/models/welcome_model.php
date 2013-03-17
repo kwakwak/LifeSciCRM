@@ -10,7 +10,7 @@ class Welcome_model extends CI_Model {
     function login()
     {
         $hashPass = do_hash($_POST['password'], 'md5');
-        $this->db->select('id');
+        $this->db->select('id,name,level');
         $this->db->where('name', $_POST['name']); 
         $this->db->where('password', $hashPass);
         $query = $this->db->get('users');
@@ -19,8 +19,21 @@ class Welcome_model extends CI_Model {
         if ($query->num_rows() > 0) 
         {
             $sessionData['id'] = $row->id ;
+            $sessionData['name'] = $row->name ;
+            switch ($row->level) {
+                case 0:
+                    $sessionData['level'] = 'user' ;
+                    break;
+                case 1:
+                    $sessionData['level'] = 'team' ;
+                    break;
+                case 2:
+                    $sessionData['level'] = 'root' ;
+                    break;
+            }
 
             $this->session->set_userdata($sessionData);
+
             return TRUE;
         }
         else
@@ -39,44 +52,9 @@ class Welcome_model extends CI_Model {
                 );
         $this->db->insert('users', $data); 
         $sessionData['id'] = $this->db->insert_id();
+        $sessionData['level'] = 'user';
+        $sessionData['name'] =$_POST['name'];
         $this->session->set_userdata($sessionData);
-        $this->user_level_check();
     }
-
-    function user_level_check()
-    {
-        $this->db->select('level,name');
-        $this->db->where('id', $this->session->userdata('id'));
-        $query = $this->db->get('users');
-        $row = $query->row();
-                
-        if ($query->num_rows() > 0) 
-        {
-            
-            $sessionData['name'] = $row->name ;
-            
-            switch ($row->level) {
-                case 0:
-                    $sessionData['level'] = 'user' ;
-                    $this->session->set_userdata($sessionData);
-                    redirect('user');
-                    break;
-                case 1:
-                    $sessionData['level'] = 'team' ;
-                    $this->session->set_userdata($sessionData);
-                    redirect('team');
-                    break;
-                case 2:
-                    $sessionData['level'] = 'root' ;
-                    $this->session->set_userdata($sessionData);
-                    redirect('root');
-                    break;
-            }
-
-
-        }
- 
-    }
-
 }
 ?>
