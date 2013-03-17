@@ -5,5 +5,6 @@
  </a> - 
  <a href="<?php echo site_url('user/logout');?>">Logout</a> - 
  <a href="<?php echo site_url('calls/open');?>">Open Calls</a> - 
+ <a href="<?php echo site_url('calls/closed');?>">Closes Call</a> - 
  <a href="<?php echo site_url('user/newCall');?>">New Call</a>
 </div>

@@ -19,7 +19,7 @@ class Calls extends CI_Controller {
     {
      $this->open();
     }
-    public function open()
+    public function open($status=0)
     {
       $this->load->view('header');
       $this->load->view('logged');
@@ -27,12 +27,25 @@ class Calls extends CI_Controller {
       $this->load->database();
       $this->load->model('calls_model');
       if ($this->session->userdata('level')=="User") 
-        $data['openArray']=$this->calls_model->open("user");
+        $data['openArray']=$this->calls_model->calls_list("user",$status);
       elseif ($this->session->userdata('level')=="Team") 
-        $data['openArray']=$this->calls_model->open("team");
-      $this->load->view('calls/open',$data);
+        $data['openArray']=$this->calls_model->calls_list("team",$status);
+      
+      $data['status']=$status;
+      $this->load->view('calls/callsList',$data);
 
       $this->load->view('footer');
+    }
+    public function closed()
+    {
+      $this->open(1);
+    }
+    public function closeCall($id)
+    {
+      $this->load->database();
+      $this->load->model('calls_model');
+      $this->calls_model->close_call($id);
+      $this->closed();
     }
 }
 ?>
