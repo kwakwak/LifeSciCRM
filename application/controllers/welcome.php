@@ -34,7 +34,7 @@ class Welcome extends CI_Controller {
 		else
 		{
 			if ($level=='User')
-				redirect('user');
+				redirect('calls/open');
 			else
 				redirect('team');
 		}

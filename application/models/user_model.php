@@ -27,5 +27,21 @@ class User_model extends CI_Model {
 
         return $profile_arr;
     }
+    function new_call()
+    {
+    $this->load->helper('date');
+
+
+
+        $data = array(
+                   'title' => $_POST['title'] ,
+                   'body' => $_POST['body'] ,
+                   'user_id' => $this->session->userdata('id') ,
+                   'call_time' => standard_date('DATE_ATOM', time()) ,
+                );
+        $this->db->insert('calls', $data); 
+
+    
+    }
   }
   ?>
