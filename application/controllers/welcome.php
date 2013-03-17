@@ -8,14 +8,9 @@ class Welcome extends CI_Controller {
 
     	$this->load->library('session');
     	$this->load->helper('url');
-
-   		if ($this->session->userdata('level')=='User')
-        	redirect('user');
-        elseif ($this->session->userdata('level')=='Team')
-        	redirect('team');
     }
 
-	public function index($level='User')
+	public function index()
 	{
 
 		$this->load->view('header');
@@ -24,37 +19,29 @@ class Welcome extends CI_Controller {
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('name', 'Full Name', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required|callback_db_check['. $level .']');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required|callback_db_check');
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$data['level'] = $level;
-			$this->load->view('welcome/login_form',$data);
+			
+			$this->load->view('welcome/login_form');
 		}
 		else
-		{
-			if ($level=='User')
-				redirect('calls/open');
-			else
-				redirect('team');
-		}
+			$this->user_level_check();
+	
 
 		$this->load->view('footer');
 	}
 
-	public function team()
-	{
-		$this->index('Team');
-	}
 
 
-	public function db_check($str,$level)
+	public function db_check($str)
 	{
 		$this->load->helper('security');
 		$this->load->model('welcome_model');
 		$this->load->database();
 
-		 if ($this->welcome_model->login($level)){
+		 if ($this->welcome_model->login()){
 		 	return TRUE;
 		 }
 			else
@@ -90,10 +77,14 @@ class Welcome extends CI_Controller {
 		{
 			$this->load->model('welcome_model');
 			$this->welcome_model->new_user();
-			redirect('user', 'refresh');
 		}
 		
 
 		$this->load->view('footer');
+    }
+    private function user_level_check()
+    {
+    //	$this->load->model('welcome_model');
+		$this->welcome_model->user_level_check();
     }
 }

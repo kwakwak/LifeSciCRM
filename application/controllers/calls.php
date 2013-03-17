@@ -26,10 +26,18 @@ class Calls extends CI_Controller {
 
       $this->load->database();
       $this->load->model('calls_model');
-      if ($this->session->userdata('level')=="User") 
-        $data['openArray']=$this->calls_model->calls_list("user",$status);
-      elseif ($this->session->userdata('level')=="Team") 
-        $data['openArray']=$this->calls_model->calls_list("team",$status);
+
+      switch ($this->session->userdata('level')) {
+        case 'user':
+                $data['openArray']=$this->calls_model->calls_list("user",$status);
+            break;
+        case 'team':
+               $data['openArray']=$this->calls_model->calls_list("team",$status);
+            break;
+        case 'root':
+               $data['openArray']=$this->calls_model->calls_list("root",$status);
+            break;
+      }
       
       $data['status']=$status;
       $this->load->view('calls/callsList',$data);

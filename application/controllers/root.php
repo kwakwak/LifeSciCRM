@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Team extends CI_Controller {
+class Root extends CI_Controller {
 
 	public function __construct()
     {
@@ -9,7 +9,7 @@ class Team extends CI_Controller {
     	$this->load->library('session');
     	$this->load->helper('url');
 
-      if ($this->session->userdata('level') !='team')
+      if ($this->session->userdata('level') != 'root')
         {
             redirect('/');
         }
@@ -17,7 +17,7 @@ class Team extends CI_Controller {
     }
     public function index()
     {
-     $this->showUsers();
+     echo "hey root";
     }
     public function showUsers()
     {

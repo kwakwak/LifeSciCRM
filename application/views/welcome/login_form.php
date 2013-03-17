@@ -1,7 +1,7 @@
 <div id="body">
 
 <?php
-		echo '<h3>'.$level.' Login</h3>';
+		echo '<h3>Login</h3>';
 		echo validation_errors();
 		echo form_open();
 		echo form_label('Full Name ', 'name');
